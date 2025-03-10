@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
-public class Calculadora {
+public class MelhoriaCalculadora {
 
     public static Scanner scanner = new Scanner(System.in);
     public static List<Integer> quantidadeVendidas = new ArrayList<>();
