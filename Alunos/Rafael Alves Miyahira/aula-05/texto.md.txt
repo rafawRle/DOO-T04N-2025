@@ -1,5 +1,0 @@
-Tarefa da Aula 5
-
-O paradigma imperativo foca em descrever como as tarefas devem ser executadas, exigindo que o programador defina uma sequência de passos e controle o fluxo de execução. Linguagens como Java seguem esse estilo, onde o desenvolvedor especifica as operações, condições e manipulação de variáveis para que o programa atinja o objetivo desejado.
-Já o paradigma declarativo concentra-se em descrever o que precisa ser feito, deixando que o sistema determine como alcançar a solução. Linguagens como Prolog seguem esse estilo, onde o programador define regras e fatos, e o sistema de execução cuida de encontrar a solução, sem a necessidade de controlar o fluxo de execução.
-Enquanto o paradigma imperativo exige que o programador controle detalhadamente cada passo do processo, o declarativo simplifica o trabalho ao delegar essa responsabilidade ao sistema. Isso torna o código imperativo mais detalhado e sequencial, enquanto o declarativo foca na lógica do problema e na abstração dos detalhes de execução.
