@@ -1,6 +1,6 @@
 # Paradigmas de Programação: Imperativo vs Declarativo
 
-Na aula do dia 20/03/2025, foram apresentados dois paradigmas: **imperativo** e **declarativo**.
+Na aula foram apresentados dois paradigmas: **imperativo** e **declarativo**.
 
 O paradigma **imperativo** é baseado em comandos. Você escreve o passo a passo do que o programa deve fazer. Ele muda o estado do sistema conforme executa. Linguagens como Java e C seguem esse estilo.
 
