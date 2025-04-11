@@ -4,22 +4,23 @@ public class Loja {
     public String nomeFantasia;
     public String razaoSocial;
     public String cnpj;
-    public String cidade;
-    public String bairro;
-    public String rua;
+    public Endereco endereco;
     public ArrayList<Vendedor> vendedores;
     public ArrayList<Cliente> clientes;
 
-    public Loja(String nomeFantasia, String razaoSocial, String cnpj, String cidade, String bairro, String rua) {
+    public Loja(String nomeFantasia, String razaoSocial, String cnpj, Endereco endereco) {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
-        this.cidade = cidade;
-        this.bairro = bairro;
-        this.rua = rua;
+        this.endereco = endereco;
         this.vendedores = new ArrayList<>();
         this.clientes = new ArrayList<>();
     }
+    
+
+
+
+   
 
     public void adicionaVendedor(Vendedor vendedor) {
         vendedores.add(vendedor);
@@ -40,6 +41,6 @@ public class Loja {
     public void apresentarse() {
         System.out.println("Nome Fantasia: " + nomeFantasia);
         System.out.println("CNPJ: " + cnpj);
-        System.out.println("Endereço: " + rua + ", " + bairro + ", " + cidade);
+        endereco.apresentarLogradouro();
     }
 }
