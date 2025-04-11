@@ -10,8 +10,8 @@ public class DiscountForMoreThan10Items extends Discount  {
         super(next);
     }
     public BigDecimal calculate(Order order) {
-        if (order.items > 10) {
-            return order.total.multiply(BigDecimal.valueOf(0.05));
+        if (order.getItems().toArray().length > 10) {
+            return order.getTotal().multiply(BigDecimal.valueOf(0.05));
         }
         return next.calculate(order);
     }

@@ -20,8 +20,8 @@ public class Order implements IPresentate
     public Seller seller;
     public Store store;
     public OrderStatus status;
-    public ArrayList<Item> items = new ArrayList<Item>();
-
+    private ArrayList<Item> items = new ArrayList<Item>();
+    private BigDecimal total;
     public Order (LocalDate createdAt, LocalDate reservationExpiredAt, Customer customer, Seller seller, Store store)
     {
         this.createdAt = createdAt;
@@ -42,7 +42,29 @@ public class Order implements IPresentate
         }
         return total;
     }
-
+    public Order setTotal(BigDecimal total)
+    {
+        this.total = total;
+        return this;
+    }
+    public BigDecimal getTotal()
+    {
+        return this.total;
+    }
+    public Order addItem(Item item)
+    {
+        this.items.add(item);
+        return this;
+    }
+    public Order removeItem(Item item)
+    {
+        this.items.remove(item);
+        return this;
+    }
+    public ArrayList<Item> getItems()
+    {
+        return this.items;
+    }
     @Override
     public String presentate() {
         return "ID: " + this.id + " Data de Criação: " + this.createdAt + " Data de Validade: " + this.reservationExpiredAt
