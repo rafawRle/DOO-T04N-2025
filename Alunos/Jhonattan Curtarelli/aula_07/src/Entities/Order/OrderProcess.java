@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class OrderProcess {
     public Order create( LocalDate reservationExpiredAt, Customer customer, Seller seller, Store store) {
-        if(confirmPayment(reservationExpiredAt)) {
+        if(!confirmPayment(reservationExpiredAt)) {
             throw new IllegalArgumentException("A data de expiração não pode ser menor que a data atual");
         }
         Order order = new Order(LocalDate.now(), reservationExpiredAt, customer, seller, store);

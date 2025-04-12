@@ -67,9 +67,15 @@ public class Order implements IPresentate
     }
     @Override
     public String presentate() {
-        return "ID: " + this.id + " Data de Criação: " + this.createdAt + " Data de Validade: " + this.reservationExpiredAt
-                + " Cliente: " + this.customer.presentate() + " Vendedor: " + this.seller.presentate() + " Loja: " + this.store.presentate()
-                + " Itens: " + this.items.toString();
+        return "--------------------------------------\n" +
+                "ID: " + this.id + "\n" +
+                "Created At: " + this.createdAt + "\n" +
+                "Reservation Expired At: " + this.reservationExpiredAt + "\n" +
+                "Customer: " + this.customer.presentate() + "\n" +
+                "Seller: " + this.seller.presentate() + "\n" +
+                "Store: " + this.store.presentate() + "\n" +
+                "Status: " + this.status.toString() + "\n" +
+                "Total: " + this.total.toString() + "\n";
 
     }
 }

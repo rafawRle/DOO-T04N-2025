@@ -23,6 +23,13 @@ public class Store implements IPresentate
     {
         return this.sellers.toArray().length;
     }
+    public Store(String razaoSocial, String fantasyName, Address address, String cnpj)
+    {
+        this.razaoSocial = razaoSocial;
+        this.fantasyName = fantasyName;
+        this.address = address;
+        this.cnpj = cnpj;
+    }
     public String presentate()
     {
         return " Nome Fantasia: " + this.fantasyName + "Cnpj: " + this.cnpj + "Endereco: " + this.address.presentate();

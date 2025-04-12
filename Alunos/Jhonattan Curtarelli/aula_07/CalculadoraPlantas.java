@@ -1,105 +1,77 @@
-import Utils.Stack;
+import src.Entities.Order.Item;
 import src.Entities.Order.Order;
-import src.Services.Calculator;
+import src.Entities.Order.OrderProcess;
+import src.Entities.Person.Customer;
+import src.Entities.Person.Seller;
+import src.Entities.Store;
+import src.Entities.ValueObjects.Address;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CalculadoraPlantas {
-    private Calculator calculator;
     private Scanner sc = new Scanner(System.in);
-    public CalculadoraPlantas() {
-        this.calculator = new Calculator();
-    }
-    public void CalculateTotalPrice()
+
+    public void CreateOrder()
     {
-        System.out.println("Insira a quantidade da planta referida");
-        int quantity = sc.nextInt();
-        System.out.println("Insira o preço da planta referida");
-        BigDecimal price = sc.nextBigDecimal();
-        sc.nextLine();
-        LocalDate date = GetDate();
-        Order order = new Order(price, quantity, date);
-        BigDecimal totalPrice = this.calculator.CalculateTotalPrice(
-                order
+        Customer customer = new Customer("Jhonattan",21,new Address(
+                "Rua 1",
+                "Bairro 1",
+                "Cidade 1",
+                "Estado 1",
+                "12345678",
+                "casa"
+        ));
+        Store store = new Store(
+                "Loja 1",
+                "Loja 1",
+                new Address(
+                        "Rua 2",
+                        "Bairro 2",
+                        "Cidade 2",
+                        "Estado 2",
+                        "87654321",
+                        "apartamento"
+                ),
+                "12.177.510/0001-18"
+        );
+        Seller seller = new Seller(
+                "Vendedor 1",
+                30,
+                store,
+                new Address(
+                        "Rua 3",
+                        "Bairro 3",
+                        "Cidade 3",
+                        "Estado 3",
+                        "12345678",
+                        "casa"
+                ),
+                new BigDecimal(1000),
+                new BigDecimal(1000)
         );
 
-        System.out.println("Quantidade: " + quantity + " Preço: " + price + " Data: " + order.getDate());
-        System.out.println(
-                "O Preço total é: R$ " +
-                        totalPrice
-        );
-    }
-    public void CalculateChange()
-    {
-        System.out.println("Insira o valor recebido");
-        BigDecimal recivedPrice = sc.nextBigDecimal();
-        System.out.println("Insira o valor total");
-        BigDecimal totalPrice = sc.nextBigDecimal();
 
-        BigDecimal change = this.calculator.CalculateChange(recivedPrice, totalPrice);
 
-        System.out.println("Valor Recebido: R$ " + recivedPrice + " Valor Total: R$ " + totalPrice);
-        System.out.println("O troco é: R$ " + change);
-    }
-    public void GetBudgetsHistory()
-    {
-        try{
-            List<Order> orders = this.calculator.GetBudgetsHistory();
-            System.out.println("Histórico de orçamentos");
-            for (Order order : orders)
-            {
-                System.out.println(
-                        "Quantidade: " + order.items +
-                                " Preço: R$ " + order.getValue() +
-                                " Total: R$ " + order.total +
-                        " Data: " + order.getDate()
-                );
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage() + " - " + e.getCause());
-        }
-    }
-    public LocalDate GetDate()
-    {
-        while (true) {
-            System.out.println("Insira a data (yyyy-MM-dd):");
-            String dateStr = sc.nextLine();
-            try {
-                return LocalDate.parse(dateStr);
-            } catch (DateTimeParseException e) {
-                System.out.println("Data inválida! Tente novamente.");
-            }
-        }
-    }
-    public void GetTotalsByDate()
-    {
-        LocalDate date = GetDate();
-        BigDecimal total = this.calculator.GetTotalSalesByDate(date);
-        System.out.println("Total de vendas na data " + date + ": R$ " + total);
-    }
-    public void GetTotalsByDateInterval()
-    {
-        LocalDate startDate = GetDate();
-        LocalDate endDate = GetDate();
-        BigDecimal total = this.calculator.GetTotalsByDateInterval(startDate, endDate);
-        System.out.println("Total de vendas entre " + startDate + " e " + endDate + ": R$ " + total);
+        OrderProcess orderProcess = new OrderProcess();
+        Order order = orderProcess.create(LocalDate.now().plusDays(5), customer, seller, store);
+        order.addItem(new Item("2", "Planta 2", "Descrição da planta 2", new BigDecimal(20)));
+        order.addItem(new Item("1", "Planta 1", "Descrição da planta 1", new BigDecimal(10)));
+
+        order.setTotal(order.calculateTotal());
+        System.out.println(order.presentate());
+
     }
     public void Menu()
     {
         System.out.println(
                 "------------------------ MENU ------------------------\n" +
-                        "1 - Calcular Preço Total\n" +
-                        "2 - Calcular Troco\n" +
-                        "3 - Buscar histórico de orçamentos\n" +
-                        "4 - Buscar Total pela Data\n" +
-                        "5 - Buscar Total pelo intervalo de datas\n" +
-                        "6 - Sair\n" 
+                        "1 - Criar Pedido\n" +
+                        "2 - Sair\n"
 
         );
         int option = sc.nextInt();
@@ -107,27 +79,10 @@ public class CalculadoraPlantas {
 
         switch (option) {
             case 1:
-                this.CalculateTotalPrice();
+                this.CreateOrder();
                 Menu();
                 break;
             case 2:
-                System.out.println("Calcular Preço Total");
-                this.CalculateChange();
-                Menu();
-                break;
-            case 3:
-                this.GetBudgetsHistory();
-                Menu();
-                break;
-            case 4:
-                this.GetTotalsByDate();
-                Menu();
-                break;
-            case 5:
-                this.GetTotalsByDateInterval();
-                Menu();
-                break;
-            case 6:
                 System.out.println("Sair");
                 break;
             default:
@@ -138,7 +93,6 @@ public class CalculadoraPlantas {
         
     }
     public static void main(String[] args) {
-        System.out.println(new Stack());
         CalculadoraPlantas calc = new CalculadoraPlantas();
         calc.Menu();
     }
