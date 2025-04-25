@@ -1,0 +1,179 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+public class SistemaVendasPlantas {
+    private static List<RegistroVenda> historicoVendas = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+    
+    public static void main(String[] args) {
+        boolean continuarExecucao = true;
+        
+        System.out.println("Bem-vindo ao Sistema de Vendas de Plantas da Dona Gabrielinha!");
+        
+        while (continuarExecucao) {
+            exibirMenu();
+            int opcao = lerOpcaoMenu();
+            
+            switch (opcao) {
+                case 1:
+                    realizarVenda();
+                    break;
+                case 2:
+                    exibirHistoricoVendas();
+                    break;
+                case 3:
+                    System.out.println("Obrigado por utilizar o sistema!");
+                    continuarExecucao = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida! Por favor, tente novamente.");
+            }
+        }
+        
+        scanner.close();
+    }
+    
+    /**
+     * Exibe o menu de opções para o usuário
+     */
+    private static void exibirMenu() {
+        System.out.println("\n----- MENU -----");
+        System.out.println("1. Realizar venda");
+        System.out.println("2. Exibir histórico de vendas");
+        System.out.println("3. Sair");
+        System.out.print("Escolha uma opção: ");
+    }
+    
+   
+    private static int lerOpcaoMenu() {
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            return -1; // Retorna opção inválida
+        }
+    }
+    
+   
+    private static void realizarVenda() {
+        System.out.println("\n----- REALIZAR VENDA -----");
+        
+        System.out.print("Nome da planta: ");
+        String nomePlanta = scanner.nextLine();
+        
+        System.out.print("Quantidade: ");
+        int quantidade = Integer.parseInt(scanner.nextLine());
+        
+        System.out.print("Preço unitário (R$): ");
+        double precoUnitario = Double.parseDouble(scanner.nextLine());
+        
+     
+        double valorTotal = quantidade * precoUnitario;
+        
+      
+        double valorDesconto = 0;
+        if (quantidade > 10) {
+            valorDesconto = valorTotal * 0.05; // 5% de desconto
+        }
+        
+      
+        double valorFinal = valorTotal - valorDesconto;
+        
+        
+        RegistroVenda venda = new RegistroVenda(nomePlanta, quantidade, precoUnitario, valorTotal, valorDesconto, valorFinal);
+        historicoVendas.add(venda);
+        
+        
+        System.out.println("\n----- RESUMO DA VENDA -----");
+        System.out.println("Planta: " + nomePlanta);
+        System.out.println("Quantidade: " + quantidade);
+        System.out.println("Preço unitário: R$ " + String.format("%.2f", precoUnitario));
+        System.out.println("Valor total: R$ " + String.format("%.2f", valorTotal));
+        
+        if (valorDesconto > 0) {
+            System.out.println("Desconto aplicado (5%): R$ " + String.format("%.2f", valorDesconto));
+        } else {
+            System.out.println("Nenhum desconto aplicado.");
+        }
+        
+        System.out.println("Valor final a pagar: R$ " + String.format("%.2f", valorFinal));
+        System.out.println("Venda registrada com sucesso!");
+    }
+   
+    private static void exibirHistoricoVendas() {
+        System.out.println("\n----- HISTÓRICO DE VENDAS -----");
+        
+        if (historicoVendas.isEmpty()) {
+            System.out.println("Nenhuma venda registrada ainda.");
+            return;
+        }
+        
+        double totalVendas = 0;
+        int totalPlantas = 0;
+        
+        for (int i = 0; i < historicoVendas.size(); i++) {
+            RegistroVenda venda = historicoVendas.get(i);
+            System.out.println("\nVenda #" + (i + 1));
+            System.out.println("Planta: " + venda.getNomePlanta());
+            System.out.println("Quantidade: " + venda.getQuantidade());
+            System.out.println("Preço unitário: R$ " + String.format("%.2f", venda.getPrecoUnitario()));
+            System.out.println("Valor total: R$ " + String.format("%.2f", venda.getValorTotal()));
+            System.out.println("Desconto aplicado: R$ " + String.format("%.2f", venda.getValorDesconto()));
+            System.out.println("Valor final: R$ " + String.format("%.2f", venda.getValorFinal()));
+            
+            totalVendas += venda.getValorFinal();
+            totalPlantas += venda.getQuantidade();
+        }
+        
+        System.out.println("\nRESUMO GERAL");
+        System.out.println("Total de vendas: " + historicoVendas.size());
+        System.out.println("Total de plantas vendidas: " + totalPlantas);
+        System.out.println("Valor total das vendas: R$ " + String.format("%.2f", totalVendas));
+    }
+}
+
+class RegistroVenda {
+    private String nomePlanta;
+    private int quantidade;
+    private double precoUnitario;
+    private double valorTotal;
+    private double valorDesconto;
+    private double valorFinal;
+    
+  
+    public RegistroVenda(String nomePlanta, int quantidade, double precoUnitario, 
+                         double valorTotal, double valorDesconto, double valorFinal) {
+        this.nomePlanta = nomePlanta;
+        this.quantidade = quantidade;
+        this.precoUnitario = precoUnitario;
+        this.valorTotal = valorTotal;
+        this.valorDesconto = valorDesconto;
+        this.valorFinal = valorFinal;
+    }
+    
+    // Getters
+    public String getNomePlanta() {
+        return nomePlanta;
+    }
+    
+    public int getQuantidade() {
+        return quantidade;
+    }
+    
+    public double getPrecoUnitario() {
+        return precoUnitario;
+    }
+    
+    public double getValorTotal() {
+        return valorTotal;
+    }
+    
+    public double getValorDesconto() {
+        return valorDesconto;
+    }
+    
+    public double getValorFinal() {
+        return valorFinal;
+    }
+}
